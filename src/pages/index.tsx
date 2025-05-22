@@ -1,115 +1,106 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
+import React, {JSX} from 'react';
+import Image from 'next/image';
+import SajuTable from '../components/SajuTable';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+interface SajuData {
+  name: string;
+  birthDate: string;
+  columns: string[];
+  sipsungTop: Array<{ main: string; sub?: string }>;
+  cheonGan: Array<{ hanja: string; description: string; bgColor?: string; hanjaColor?: string; descriptionColor?: string, borderColor?: string }>;
+  jiJi: Array<{ hanja: string; description: string; bgColor?: string; hanjaColor?: string; descriptionColor?: string, borderColor?: string }>;
+  sipsungBottom: Array<{ main: string; sub?: string }>;
+  unseong: Array<{ main: string; sub?: string }>;
+  sinsal: Array<{ main: string; sub?: string }>;
+  gwiin: Array<{ main: string | JSX.Element; sub?: string | JSX.Element }>;
+}
 
-export default function Home() {
+
+// 실제 사주 데이터 (OCR 및 이미지 참고, 색상 SajuIcon에 맞게 조정)
+const sajuData: SajuData = {
+  name: '김로켓',
+  birthDate: '1980년 8월27일 08:10',
+  columns: ['時', '日', '月', '年'],
+  sipsungTop: [
+    { main: '傷官', sub: '(상관)' },
+    { main: '比肩', sub: '(비견)' },
+    { main: '傷官', sub: '(상관)' },
+    { main: '傷官', sub: '(상관)' },
+  ],
+  cheonGan: [ // bgColor 등은 SajuIcon에 전달되어 아이콘 스타일 결정
+    { hanja: '壬', description: '陽水', bgColor: 'bg-gray-700', hanjaColor: 'text-white', descriptionColor: 'text-gray-300', borderColor: 'border-gray-500' },
+    { hanja: '丁', description: '陰火', bgColor: 'bg-red-500', hanjaColor: 'text-white', descriptionColor: 'text-red-100', borderColor: 'border-red-700'  },
+    { hanja: '癸', description: '陰水', bgColor: 'bg-gray-700', hanjaColor: 'text-white', descriptionColor: 'text-gray-300', borderColor: 'border-gray-500'  },
+    { hanja: '癸', description: '陰水', bgColor: 'bg-gray-700', hanjaColor: 'text-white', descriptionColor: 'text-gray-300', borderColor: 'border-gray-500'  },
+  ],
+  jiJi: [
+    { hanja: '寅', description: '陽木', bgColor: 'bg-teal-500', hanjaColor: 'text-white', descriptionColor: 'text-teal-100', borderColor: 'border-teal-700'  },
+    { hanja: '巳', description: '陰火', bgColor: 'bg-red-500', hanjaColor: 'text-white', descriptionColor: 'text-red-100', borderColor: 'border-red-700'  },
+    { hanja: '亥', description: '陰水', bgColor: 'bg-gray-700', hanjaColor: 'text-white', descriptionColor: 'text-gray-300', borderColor: 'border-gray-500'  },
+    { hanja: '酉', description: '陰金', bgColor: 'bg-white', hanjaColor: 'text-gray-700', descriptionColor: 'text-gray-600', borderColor: 'border-gray-400' },
+  ],
+  sipsungBottom: [
+    { main: '比肩', sub: '(비견)' }, { main: '劫財', sub: '(겁재)' }, { main: '食神', sub: '(식신)' }, { main: '偏財', sub: '(편재)' },
+  ],
+  unseong: [
+    { main: '死', sub: '(사)' }, { main: '帝旺', sub: '(제왕)' }, { main: '胎', sub: '(태)' }, { main: '長生', sub: '(장생)' },
+  ],
+  sinsal: [
+    { main: '劫殺', sub: '(겁살)' }, { main: '地殺', sub: '(지살)' }, { main: '驛馬殺', sub: '(역마살)' }, { main: '將星殺', sub: '(장성살)' },
+  ],
+  gwiin: [
+    { main: '貴人', sub: '(귀인)' },
+    { main: '(없음)', sub: '' },
+    { main: '(없음)', sub: '' },
+    { main: '天乙', sub: '(천을귀인)' },
+    { main: <>天乙<br/>太極<br/>文昌</>, sub: <>(천을귀인)<br/>(태극귀인)<br/>(문창귀인)</> },
+  ],
+};
+
+const speechBubble1Text = "나의 운명은 어떤 모습일까?\n하늘의 별들처럼 정해져 있는 걸까?";
+const speechBubble2Text = "사주팔자 속에 숨겨진\n내 삶의 비밀을 찾아 떠나보자.";
+
+
+const HomePage: React.FC = () => {
   return (
-    <div
-      className={`${geistSans.className} ${geistMono.className} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/pages/index.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="relative w-full min-h-screen font-sans">
+      {/* 배경 이미지 */}
+      <Image
+        src="/images/background.png" 
+        alt="사주 배경"
+        layout="fill"
+        objectFit="cover"
+        quality={100}
+        priority
+        className="-z-10" 
+      />
+
+      {/* 컨텐츠 컨테이너 (max-w-md로 중앙 정렬 및 반응형) */}
+      <div className="relative mx-auto w-full max-w-md h-screen flex flex-col items-center justify-start pt-[18vh]"> {/* 상단 타이틀 영역만큼 패딩 */}
+        
+        {/* 첫번째 말풍선 텍스트 */}
+        <div className="absolute top-[30vh] left-1/2 -translate-x-1/2 w-[70%] text-center">
+          <p className="text-sm text-gray-700 whitespace-pre-line leading-snug">
+            {speechBubble1Text}
+          </p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* 두번째 말풍선 텍스트 */}
+        <div className="absolute top-[51vh] left-1/2 -translate-x-1/2 w-[70%] text-center">
+           <p className="text-sm text-gray-700 whitespace-pre-line leading-snug">
+            {speechBubble2Text}
+          </p>
+        </div>
+        
+        {/* 사주 테이블 컨테이너 */}
+        <div className="absolute bottom-[2vh] w-[92%] left-1/2 -translate-x-1/2 px-2">
+          <SajuTable data={sajuData} />
+        </div>
+
+      </div>
     </div>
   );
-}
+};
+
+export default HomePage;
