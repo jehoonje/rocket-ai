@@ -19,10 +19,11 @@ const SajuIcon: React.FC<SajuIconProps> = ({
 }) => {
   return (
     <div
-      className={`w-[70px] h-[90px] ${bgColor} border ${borderColor} rounded-md flex flex-col items-center justify-center p-1 shadow-sm`}
+      className={`w-[70px] h-[70px] border flex flex-col items-center justify-center p-1`}
     >
-      <span className={`text-4xl font-serif ${hanjaColor} leading-tight`}>{hanja}</span>
-      <span className={`text-xs ${descriptionColor} mt-1`}>{description}</span>
+      <span className={`text-xs mt-1`}>{description}</span>
+      <span className={`text-4xl font-serif leading-tight`}>{hanja}</span>
+      <span className={`text-xs mt-1`}>{description}</span>
     </div>
   );
 };

@@ -35,17 +35,17 @@ const SajuTable: React.FC<SajuTableProps> = ({ data }) => {
   );
 
   return (
-    <div className="w-full bg-[#f6f3ef] p-[6px] sm:p-2 rounded-md shadow-lg border-2 border-[#3a3a5a]"> {/* 이미지의 베이지색 배경 및 진한 테두리 */}
-      <div className="text-center mb-2 text-gray-700">
+    <div className="w-full h-[43rem] bg-[#f6f3ef] rounded-md shadow-lg flex flex-col">
+      <div className="text-center mb-2 text-gray-700 px-[15px] pt-[15px]">
         <p className="text-sm sm:text-base font-semibold">{data.name}님의 사주</p>
         <p className="text-xs sm:text-sm">{data.birthDate}</p>
       </div>
 
-      <div className="grid grid-cols-5 border-t border-l border-gray-300 bg-white">
+      <div className="flex-grow grid grid-cols-5 bg-white px-[15px] pt-[calc(15px+30px)] pb-[calc(15px+30px)]">
         {/* Header Row */}
-        <div className="bg-gray-100 border-r border-b border-gray-300"></div> {/* Empty corner */}
+        <div className="bg-gray-100 border-r border-b border-gray-300"></div> {/* 첫번째 빈 셀 */}
         {data.columns.map((col, index) => (
-          <div key={index} className="text-center font-semibold text-sm sm:text-base text-gray-700 border-r border-b border-gray-300 py-1 bg-gray-100">
+          <div key={index} className="text-center font-semibold text-sm sm:text-base text-gray-700 border-r border-b border-gray-300 py-1 bg-gray-100 flex items-center justify-center">
             {col}
           </div>
         ))}
