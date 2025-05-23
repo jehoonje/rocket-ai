@@ -7,8 +7,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Nanum Gothic', 'sans-serif'], 
-        serif: ['Noto Serif KR', 'serif'],    
+        sans: ['Nanum Gothic', 'sans-serif'],
+        serif: ['Noto Serif KR', 'serif'],
+        Hangul: ['GapyeongHanseokbong-Bold'],
       },
       colors: {
         beige: {
@@ -17,5 +18,7 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+  ],
 };

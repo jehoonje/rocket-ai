@@ -1,234 +1,204 @@
-import React, { JSX } from "react";
-import Image from "next/image";
-import SajuTable from "../components/SajuTable"; // 경로 확인
+// pages/index.tsx
+import React, { useRef, useEffect, useState } from 'react';
+import Image from 'next/image';
+import SajuTable, { SajuData } from '../components/SajuTable';
 
-interface SajuData {
-  name: string;
-  birthDate: string;
-  columns: string[];
-  sipsungTop: Array<{ main: string; sub?: string }>;
-  cheonGan: Array<{
-    hanja: string;
-    description: string;
-    bgColor?: string;
-    hanjaColor?: string;
-    descriptionColor?: string;
-    borderColor?: string;
-  }>;
-  jiJi: Array<{
-    hanja: string;
-    description: string;
-    bgColor?: string;
-    hanjaColor?: string;
-    descriptionColor?: string;
-    borderColor?: string;
-  }>;
-  sipsungBottom: Array<{ main: string; sub?: string }>;
-  unseong: Array<{ main: string; sub?: string }>;
-  sinsal: Array<{ main: string; sub?: string }>;
-  gwiin: Array<{ main: string | JSX.Element; sub?: string | JSX.Element }>;
-}
-
+// 1) 사주 데이터 정의
 const sajuData: SajuData = {
-  name: "김로켓",
-  birthDate: "1980년 8월27일 08:10",
-  columns: ["時", "日", "月", "年"],
+  name: '임제훈',
+  birthDate: '1993년 7월27일 19:38',
+  columns: ['時', '日', '月', '年'],
   sipsungTop: [
-    { main: "傷官", sub: "(상관)" },
-    { main: "比肩", sub: "(비견)" },
-    { main: "傷官", sub: "(상관)" },
-    { main: "傷官", sub: "(상관)" },
+    { main: '傷官', sub: '(상관)' },
+    { main: '比肩', sub: '(비견)' },
+    { main: '傷官', sub: '(상관)' },
+    { main: '傷官', sub: '(상관)' },
   ],
   cheonGan: [
     {
-      hanja: "壬",
-      description: "陽水",
-      bgColor: "bg-gray-700",
-      hanjaColor: "text-white",
-      descriptionColor: "text-gray-300",
-      borderColor: "border-gray-500",
+      hanja: '壬',
+      hanjaColor: 'text-white',
+      description: '陽水',
+      descriptionkr: '임수',
+      bgColor: 'bg-gray-700',
+      descriptionColor: 'text-white',
+      borderColor: 'border-gray-500',
     },
     {
-      hanja: "丁",
-      description: "陰火",
-      bgColor: "bg-red-500",
-      hanjaColor: "text-white",
-      descriptionColor: "text-red-100",
-      borderColor: "border-red-700",
+      hanja: '丁',
+      hanjaColor: 'text-white',
+      description: '陰火',
+      descriptionkr: '정화',
+      bgColor: 'bg-red-700',
+      descriptionColor: 'text-white',
+      borderColor: 'border-red-700',
     },
     {
-      hanja: "癸",
-      description: "陰水",
-      bgColor: "bg-gray-700",
-      hanjaColor: "text-white",
-      descriptionColor: "text-gray-300",
-      borderColor: "border-gray-500",
+      hanja: '癸',
+      hanjaColor: 'text-white',
+      description: '陰水',
+      descriptionkr: '계수',
+      bgColor: 'bg-gray-700',
+      descriptionColor: 'text-white',
+      borderColor: 'border-gray-500',
     },
     {
-      hanja: "癸",
-      description: "陰水",
-      bgColor: "bg-gray-700",
-      hanjaColor: "text-white",
-      descriptionColor: "text-gray-300",
-      borderColor: "border-gray-500",
+      hanja: '癸',
+      hanjaColor: 'text-white',
+      description: '陰水',
+      descriptionkr: '계수',
+      bgColor: 'bg-gray-700',
+      descriptionColor: 'text-white',
+      borderColor: 'border-gray-500',
     },
   ],
   jiJi: [
     {
-      hanja: "寅",
-      description: "陽木",
-      bgColor: "bg-teal-500",
-      hanjaColor: "text-white",
-      descriptionColor: "text-teal-100",
-      borderColor: "border-teal-700",
+      hanja: '寅',
+      hanjaColor: 'text-white',
+      description: '陽木',
+      descriptionkr: '인목',
+      bgColor: 'bg-teal-700',
+      descriptionColor: 'text-white',
+      borderColor: 'border-teal-700',
     },
     {
-      hanja: "巳",
-      description: "陰火",
-      bgColor: "bg-red-500",
-      hanjaColor: "text-white",
-      descriptionColor: "text-red-100",
-      borderColor: "border-red-700",
+      hanja: '巳',
+      hanjaColor: 'text-white',
+      description: '陰火',
+      descriptionkr: '사화',
+      bgColor: 'bg-red-700',
+      descriptionColor: 'text-white',
+      borderColor: 'border-red-700',
     },
     {
-      hanja: "亥",
-      description: "陰水",
-      bgColor: "bg-gray-700",
-      hanjaColor: "text-white",
-      descriptionColor: "text-gray-300",
-      borderColor: "border-gray-500",
+      hanja: '亥',
+      hanjaColor: 'text-white',
+      description: '陰水',
+      descriptionkr: '해수',
+      bgColor: 'bg-gray-700',
+      descriptionColor: 'text-white',
+      borderColor: 'border-gray-500',
     },
     {
-      hanja: "酉",
-      description: "陰金",
-      bgColor: "bg-white",
-      hanjaColor: "text-gray-700",
-      descriptionColor: "text-gray-600",
-      borderColor: "border-gray-400",
+      hanja: '酉',
+      hanjaColor: 'text-black',
+      description: '陰金',
+      descriptionkr: '유금',
+      bgColor: 'bg-white',
+      descriptionColor: 'text-black',
+      borderColor: 'border-gray-400',
     },
   ],
   sipsungBottom: [
-    { main: "比肩", sub: "(비견)" },
-    { main: "劫財", sub: "(겁재)" },
-    { main: "食神", sub: "(식신)" },
-    { main: "偏財", sub: "(편재)" },
+    { main: '比肩', sub: '(비견)' },
+    { main: '劫財', sub: '(겁재)' },
+    { main: '食神', sub: '(식신)' },
+    { main: '偏財', sub: '(편재)' },
   ],
   unseong: [
-    { main: "死", sub: "(사)" },
-    { main: "帝旺", sub: "(제왕)" },
-    { main: "胎", sub: "(태)" },
-    { main: "長生", sub: "(장생)" },
+    { main: '死', sub: '(사)' },
+    { main: '帝旺', sub: '(제왕)' },
+    { main: '胎', sub: '(태)' },
+    { main: '長生', sub: '(장생)' },
   ],
   sinsal: [
-    { main: "劫殺", sub: "(겁살)" },
-    { main: "地殺", sub: "(지살)" },
-    { main: "驛馬殺", sub: "(역마살)" },
-    { main: "將星殺", sub: "(장성살)" },
+    { main: '劫殺', sub: '(겁살)' },
+    { main: '地殺', sub: '(지살)' },
+    { main: '驛馬殺', sub: '(역마살)' },
+    { main: '將星殺', sub: '(장성살)' },
   ],
   gwiin: [
-    { main: "貴人", sub: "(귀인)" },
-    { main: "(없음)", sub: "" },
-    { main: "(없음)", sub: "" },
-    { main: "天乙", sub: "(천을귀인)" },
+    { main: '貴人', sub: '(귀인)' },
+    { main: '', sub: '' },
+    { main: '', sub: '' },
+    { main: '天乙', sub: '(천을귀인)' },
     {
       main: (
         <>
-          天乙
-          <br />
-          太極
-          <br />
+          天乙<br />
+          天乙<br />
           文昌
         </>
       ),
       sub: (
         <>
-          (천을귀인)
-          <br />
-          (태극귀인)
-          <br />
+          (천을귀인)<br />
+          (천을귀인)<br />
           (문창귀인)
         </>
       ),
     },
   ],
 };
+// 2) 말풍선 텍스트
+const bubble1 = `이제 본격적으로\n${sajuData.name}님의 사주팔자를\n분석해볼 차례네요.`;
+const bubble2 = '사주팔자 속에 숨겨진\n내 삶의 비밀을 찾아 떠나보자.';
 
-const speechBubble1Text =
-  `이제 본격적으로\n ${sajuData.name}님의 사주팔자를\n 분석해볼 차례네요.`;
-const speechBubble2Text = 
-  "사주팔자 속에 숨겨진\n내 삶의 비밀을 찾아 떠나보자.";
-const speechBubble1Position = { top: "31%", left: "0%" };
-const speechBubble2Position = { top: "49.3%", left: "39%" };
+export default function HomePage() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState<number>(1);
+  const [bottomPx, setBottomPx] = useState<number>(0);
 
-const HomePage: React.FC = () => {
-  const desiredMinHeight = "2081px"; // 페이지 전체의 최소 높이 (스크롤을 위해)
+  useEffect(() => {
+    const baseW      = 362;
+    const maxScale   = 420 / baseW;
+    const baseBottom = 5.2 * 16;
+    const maxBottom  = 6 * 16;
+
+    const update = () => {
+      if (!containerRef.current) return;
+      const parentW = containerRef.current.clientWidth;
+      let s = parentW / baseW;
+      s = Math.min(s, maxScale);           // 362→420 사이만 확대
+      setScale(s);
+      setBottomPx(Math.min(baseBottom * s, maxBottom));
+    };
+
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
 
   return (
-    // 1. 최상위 div: 배경 이미지 영역
-    <div className="relative w-full min-h-screen font-sans">
-      <Image
-        src="/images/background.png"
-        alt="사주 배경"
-        layout="fill"
-        objectFit="cover"
-        quality={100}
-        priority
-        className="-z-10"
-      />
+    <div className="mx-auto w-full max-w-md bg-white font-Hangul relative">
+      {/* 배경 이미지 */}
+      <div className="w-full relative">
+        <Image
+          src="/images/background.png"
+          alt="사주 배경"
+          layout="responsive"
+          width={375}
+          height={4162}
+          quality={100}
+          priority
+        />
 
-      {/* 2. 실제 컨텐츠를 담는 컨테이너.
-          - position: relative 추가 (SajuTable의 absolute 기준점)
-          - minHeight: desiredMinHeight 유지 (페이지 전체 스크롤 확보)
-          - paddingBottom: SajuTable이 fixed/absolute로 빠져나갈 공간 확보
-      */}
-      <div
-        className="relative mx-auto w-full max-w-md flex flex-col items-center pt-[6vh] sm:pt-[8vh]"
-        style={{
-          minHeight: desiredMinHeight,
-         
-        }}
-      >
-        {/* 말풍선 영역 - Absolute Positioning */}
-        {/* 첫번째 말풍선 */}
-        <div
-          className="absolute w-[70%] sm:w-[60%] md:w-[50%] z-20"
-          style={{
-            top: speechBubble1Position.top,
-            left: speechBubble1Position.left,
-          }}
-        >
-          <div className="text-center">
-            <p className="text-md text-gray-200 sm:text-base whitespace-pre-line bg-black/40 p-3">
-              {speechBubble1Text}
-            </p>
+        {/* 말풍선 1 */}
+        <div className="absolute z-10" style={{ top:'5%', left:'10%' }}>
+          <div className="rounded-lg text-center">
+            <p className="whitespace-pre-line text-md">{bubble1}</p>
+          </div>
+        </div>
+        {/* 말풍선 2 */}
+        <div className="absolute z-10" style={{ top:'15%', left:'5%' }}>
+          <div className="rounded-lg text-center">
+            <p className="whitespace-pre-line text-md">{bubble2}</p>
           </div>
         </div>
 
-        {/* 두번째 말풍선 */}
+        {/* 테이블 래퍼: inset-x 비율/픽셀 유지, bottom은 계산된 px */}
         <div
-          className="absolute w-[70%] sm:w-[60%] md:w-[50%] z-20"
-          style={{
-            top: speechBubble2Position.top,
-            left: speechBubble2Position.left,
-            transform: "translateX(-50%)",
-          }}
+          ref={containerRef}
+          className="absolute inset-x-[5%] sm:inset-x-[11px] z-20"
+          style={{ bottom: `${bottomPx}px` }}
         >
-           <div className="text-center">
-             <p className="text-md text-gray-200 whitespace-pre-line bg-black/40 p-3">
-              {speechBubble2Text}
-            </p>
+          {/* 테이블 스케일링 */}
+          <div style={{ transform: `scale(${scale})`, transformOrigin:'bottom left' }}>
+            <SajuTable data={sajuData} />
           </div>
-        </div>
-
-        <div
-          className="mt-auto w-full border-2 px-2 z-100"
-          style={{ bottom: 'full' }} // '50px'
-        >
-          <SajuTable data={sajuData} />
         </div>
       </div>
     </div>
   );
-};
-
-export default HomePage;
+}

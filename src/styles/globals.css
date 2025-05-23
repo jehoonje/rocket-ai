@@ -1,5 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Noto+Serif+KR:wght@400;600;700&display=swap');
-
-@import "tailwindcss/preflight"; 
+@tailwind base;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'GapyeongHanseokbong-Bold';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/GapyeongHanseokbong-Bold.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+
+body {
+  font-family: "GapyeongHanseokbong-Bold";
+  font-weight: 300;
+}
