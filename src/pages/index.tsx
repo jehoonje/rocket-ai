@@ -174,16 +174,35 @@ export default function HomePage() {
           priority
         />
 
-        {/* 말풍선 1 */}
-        <div className="absolute z-10" style={{ top:'5%', left:'10%' }}>
-          <div className="rounded-lg text-center">
-            <p className="whitespace-pre-line text-md">{bubble1}</p>
+        {/** 말풍선 1 **/}
+        <div
+          className="
+            absolute z-10
+            top-[31.%] left-[17%]
+            sm:top-[25%] sm:left-[10%]
+            md:top-[31.5%] md:left-[14%]
+          "
+        >
+          <div className="p-2 sm:p-3 text-center">
+            <p className="whitespace-pre-line text-[clamp(10px,3vw,16px)] leading-tight">
+              {bubble1}
+            </p>
           </div>
         </div>
-        {/* 말풍선 2 */}
-        <div className="absolute z-10" style={{ top:'15%', left:'5%' }}>
-          <div className="rounded-lg text-center">
-            <p className="whitespace-pre-line text-md">{bubble2}</p>
+
+        {/** 말풍선 2 **/}
+        <div
+          className="
+            absolute z-10
+            top-[49.2%] left-[16%]
+            sm:top-[12%] sm:left-[8%]
+            md:top-[49%] md:left-[13%]
+          "
+        >
+          <div className="p-2 sm:p-3 text-center">
+            <p className="whitespace-pre-line text-[clamp(10px,3vw,16px)] leading-tight">
+              {bubble2}
+            </p>
           </div>
         </div>
 
